@@ -19,4 +19,9 @@ export default class ClientesController {
 
     return response.created(cliente)
   }
+
+  async index({ response }: HttpContext) {
+    const clientes = await Cliente.query().orderBy('id', 'asc')
+    return response.ok(clientes)
+  }
 }
