@@ -59,6 +59,65 @@ export class ClienteSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class ContaCorrenteSchema extends BaseModel {
+  static $columns = ['agencia', 'clienteId', 'createdAt', 'id', 'numeroConta', 'saldo', 'updatedAt'] as const
+  $columns = ContaCorrenteSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare clienteId: number
+  @column()
+  declare numeroConta: string
+  @column()
+  declare agencia: string
+  @column()
+  declare saldo: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class MovimentacaoSchema extends BaseModel {
+  static $columns = ['contaDestinoId', 'contaOrigemId', 'createdAt', 'descricao', 'id', 'tipo', 'updatedAt', 'valor'] as const
+  $columns = MovimentacaoSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare contaOrigemId: number
+  @column()
+  declare contaDestinoId: number | null
+  @column()
+  declare tipo: 'deposito' | 'saque' | 'transferencia' | 'aplicacao' | 'resgate'
+  @column()
+  declare valor: number
+  @column()
+  declare descricao: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class InvestimentoSchema extends BaseModel {
+  static $columns = ['clienteId', 'createdAt', 'dataAplicacao', 'dataResgate', 'id', 'tipo', 'valorInvestido', 'updatedAt'] as const
+  $columns = InvestimentoSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare clienteId: number
+  @column()
+  declare tipo: 'poupanca' | 'titulos' | 'acoes'
+  @column()
+  declare valorInvestido: number
+  @column.dateTime()
+  declare dataAplicacao: DateTime
+  @column.dateTime({ serializeAs: null })
+  declare dataResgate: DateTime | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
